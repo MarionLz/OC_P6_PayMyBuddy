@@ -19,7 +19,7 @@ public class Transaction {
     private String description;
 
     @NotNull
-    private BigDecimal amount;
+    private Double amount;
 
     @ManyToOne
     @JoinColumn(name = "senderId")

@@ -18,5 +18,5 @@ public class Account {
     private Long id;
 
     @NotNull
-    private BigDecimal amount;
+    private Double amount;
 }
