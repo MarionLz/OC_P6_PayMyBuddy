@@ -2,6 +2,7 @@ package com.openclassrooms.paymybuddy.controller;
 
 import com.openclassrooms.paymybuddy.DTO.RegisterRequestDTO;
 import com.openclassrooms.paymybuddy.service.RegisterService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ public class RegisterController {
     RegisterService registerService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterRequestDTO registerRequest) {
+    public ResponseEntity<String> registerUser(@RequestBody @Valid RegisterRequestDTO registerRequest) {
 
         registerService.register(registerRequest);
         return ResponseEntity.status(201).body("User registered successfully");

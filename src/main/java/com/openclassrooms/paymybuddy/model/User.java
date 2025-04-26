@@ -18,15 +18,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(min = 2, max = 50)
+    @Column(nullable = false, length = 50)
     private String username;
 
-    @NotNull
-    @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @NotNull
+    @Column(nullable = false)
     private String password;
 
     @OneToMany

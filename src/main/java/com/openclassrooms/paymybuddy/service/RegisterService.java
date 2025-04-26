@@ -24,7 +24,7 @@ public class RegisterService {
     public void register(RegisterRequestDTO registerRequest) {
 
         Account account = new Account();
-        account.setAmount(1000.0);
+        account.setBalance(1000.0);
 
         User user = new User();
         user.setUsername(registerRequest.getUsername());
