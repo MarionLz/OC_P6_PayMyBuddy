@@ -16,7 +16,8 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable) // désactiver CSRF pour les tests Postman
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login").permitAll() // autoriser l'accès libre ici
+                        .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/", "/register", "/login").permitAll() // autoriser l'accès libre ici
                         .anyRequest().authenticated() // le reste doit être authentifié
                 )
                 .build();

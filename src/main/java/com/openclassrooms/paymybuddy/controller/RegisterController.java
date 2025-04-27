@@ -5,17 +5,22 @@ import com.openclassrooms.paymybuddy.service.RegisterService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
+@RequestMapping("/register")
 public class RegisterController {
 
     @Autowired
     RegisterService registerService;
 
-    @PostMapping("/register")
+    @GetMapping
+    public String register() {
+        return "register";
+    }
+
+    @PostMapping
     public ResponseEntity<String> registerUser(@RequestBody @Valid RegisterRequestDTO registerRequest) {
 
         registerService.register(registerRequest);
