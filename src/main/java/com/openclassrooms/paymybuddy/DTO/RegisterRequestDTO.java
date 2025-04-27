@@ -10,7 +10,7 @@ public class RegisterRequestDTO {
     @Size(min = 2, max = 50, message = "Username should be between 2 and 50 characters")
     private String username;
 
-    @NotNull(message = "Email should not be null")
+    @NotNull(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;
 

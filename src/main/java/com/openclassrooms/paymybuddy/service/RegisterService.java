@@ -5,6 +5,8 @@ import com.openclassrooms.paymybuddy.model.Account;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import com.openclassrooms.paymybuddy.repository.AccountRepository;
+import com.openclassrooms.paymybuddy.exceptions.EmailAlreadyExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,10 @@ public class RegisterService {
     UserRepository userRepository;
 
     public void register(RegisterRequestDTO registerRequest) {
+
+        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+            throw new EmailAlreadyExistsException("An account with this email already exists.");
+        }
 
         Account account = new Account();
         account.setBalance(1000.0);
