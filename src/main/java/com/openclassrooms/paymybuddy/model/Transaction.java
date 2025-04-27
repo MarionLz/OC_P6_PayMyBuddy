@@ -15,11 +15,11 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private String description;
 
-    @NotNull
-    private BigDecimal amount;
+    @Column(nullable = false)
+    private Double amount;
 
     @ManyToOne
     @JoinColumn(name = "senderId")
