@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -21,8 +22,12 @@ public class RegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<String> registerUser(@RequestBody @Valid RegisterRequestDTO registerRequest) {
+    public ResponseEntity<String> registerUser(@ModelAttribute @Valid RegisterRequestDTO registerRequest,
+                                               BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("Invalid data");
+        }
         registerService.register(registerRequest);
         return ResponseEntity.status(201).body("User registered successfully");
     }
