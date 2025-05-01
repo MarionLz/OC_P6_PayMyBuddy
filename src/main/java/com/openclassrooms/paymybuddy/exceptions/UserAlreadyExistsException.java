@@ -5,9 +5,9 @@ package com.openclassrooms.paymybuddy.exceptions;
  * This exception is used to indicate that the user is trying to register with an email
  * that is already associated with an existing account.
  */
-public class EmailAlreadyExistsException extends RuntimeException {
+public class UserAlreadyExistsException extends RuntimeException {
 
-    public EmailAlreadyExistsException(String message) {
+    public UserAlreadyExistsException(String message) {
         super(message);
     }
 }
