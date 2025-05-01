@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil - Pay My Buddy</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        header {
+            padding: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 30px;
+            font-size: 14px;
+        }
+
+        nav span {
+            margin-right: auto;
+            font-weight: bold;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: black;
+        }
+
+        nav a.active {
+            color: #1A73E8; /* couleur bleue pour 'Profil' actif */
+            font-weight: bold;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            margin-top: 100px;
+        }
+
+        .profile-section {
+            width: 500px;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-row label {
+            font-weight: normal;
+        }
+
+        .btn-modifier {
+            background-color: #FBAF3F;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-modifier:hover {
+            background-color: #e99e2d;
+        }
+
+        .profile-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <span><strong>Pay My Buddy</strong></span>
+        <a th:href="@{/transfer}">Transférer</a>
+        <a th:href="@{/profile}" class="active">Profil</a>
+        <a th:href="@{/add-connection}">Ajouter relation</a>
+        <a th:href="@{/logout}">Se déconnecter</a>
+    </nav>
+</header>
+
+<main>
+    <section class="profile-section">
+        <div class="profile-info">
+            <div class="profile-row">
+                <label>Username</label>
+                <span>@<span th:text="${user.username}">username</span></span>
+            </div>
+            <div class="profile-row">
+                <label>Mail</label>
+                <span th:text="${user.email}">nom@domain.com</span>
+            </div>
+            <div class="profile-row">
+                <label>Mot de passe</label>
+                <span>mot de passe</span>
+            </div>
+            <div class="profile-actions">
+                <a th:href="@{/profile/edit}">
+                    <button class="btn-modifier">Modifier</button>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
