@@ -4,6 +4,7 @@ import com.openclassrooms.paymybuddy.DTO.RegisterRequestDTO;
 import com.openclassrooms.paymybuddy.service.RegisterService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,8 +22,8 @@ public class RegisterController {
         return "register";
     }
 
-    @PostMapping
-    public ResponseEntity<String> registerUser(@ModelAttribute @Valid RegisterRequestDTO registerRequest,
+    @PostMapping (consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<String> registerNewUser(@ModelAttribute @Valid RegisterRequestDTO registerRequest,
                                                BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
