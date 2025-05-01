@@ -22,7 +22,7 @@ public class RegisterController {
         return "register";
     }
 
-    @PostMapping (consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping
     public ResponseEntity<String> registerNewUser(@ModelAttribute @Valid RegisterRequestDTO registerRequest,
                                                BindingResult bindingResult) {
 
