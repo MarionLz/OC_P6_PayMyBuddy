@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
         }
 
         .title {
-            background-color: #FFA500; /* Orange */
+            background-color: #FFA500;
             color: white;
             font-size: 24px;
             font-weight: bold;
@@ -58,7 +58,7 @@
         .submit-button {
             width: 100%;
             padding: 12px;
-            background-color: #007bff; /* Bleu */
+            background-color: #007bff;
             color: white;
             font-weight: bold;
             border: none;
@@ -70,32 +70,38 @@
             background-color: #0056b3;
         }
 
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -8px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Titre -->
     <div class="title">Pay My Buddy</div>
 
-    <!-- Formulaire d'inscription -->
-    <form action="/register" method="post">
-        <!-- Username -->
+    <form th:action="@{/register}" th:object="${registerRequest}" method="post">
         <label>
-            <input type="text" name="username" class="input-field" placeholder="Username" required>
+            <input type="text" th:field="*{username}" class="input-field" placeholder="Username" />
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
         </label>
 
-        <!-- Mail -->
         <label>
-            <input type="email" name="email" class="input-field" placeholder="Mail" required>
+            <input type="text" th:field="*{email}" class="input-field" placeholder="Mail" />
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
         </label>
 
-        <!-- Mot de passe -->
         <label>
-            <input type="password" name="password" class="input-field" placeholder="Mot de passe" required>
+            <input type="password" th:field="*{password}" class="input-field" placeholder="Mot de passe" />
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
         </label>
 
-        <!-- Bouton d'inscription -->
+        <div th:if="${registrationError}" class="error" th:text="${registrationError}"></div>
+
         <button type="submit" class="submit-button">S'inscrire</button>
     </form>
 </div>
