@@ -6,16 +6,14 @@ import lombok.Data;
 @Data
 public class RegisterRequestDTO {
 
-    @NotBlank(message = "Username is required and cannot be blank")
-    @Size(min = 2, max = 50, message = "Username should be between 2 and 50 characters")
+    @Size(min = 2, max = 50, message = "Le nom d'utilisateur doit être compris entre 2 et 50 caractères.")
     private String username;
 
-    @NotNull(message = "Email is required")
-    @Email(message = "Email should be valid")
+    @NotBlank(message = "Un email est requis.")
+    @Email(message = "Entrez un email valide.")
     private String email;
 
-    @NotBlank(message = "Password is required and cannot be blank")
-    @Size(min = 8, message = "Password should be at least 8 characters long")
+    @Size(min = 8, message = "Entrez un mot de passe de 8 caractères minimum.")
     private String password;
 
     public RegisterRequestDTO() {

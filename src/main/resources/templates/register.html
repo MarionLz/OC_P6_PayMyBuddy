@@ -91,7 +91,7 @@
         </label>
 
         <label>
-            <input type="email" th:field="*{email}" class="input-field" placeholder="Mail" />
+            <input type="text" th:field="*{email}" class="input-field" placeholder="Mail" />
             <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
         </label>
 
