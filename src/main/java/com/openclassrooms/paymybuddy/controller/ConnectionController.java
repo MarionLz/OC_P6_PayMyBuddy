@@ -1,6 +1,7 @@
 package com.openclassrooms.paymybuddy.controller;
 
 import com.openclassrooms.paymybuddy.service.ConnectionService;
+import com.openclassrooms.paymybuddy.utils.AddConnectionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +28,12 @@ public class ConnectionController {
     public String addConnection(@RequestParam("email") String email, Principal principal, Model model) {
 
         String currentUserEmail = principal.getName();
-        if (currentUserEmail.equals(email)) {
-            model.addAttribute("errorMessage", "Vous ne pouvez pas vous ajouter vous-même.");
-            return "connections";
-        }
-        if (connectionService.addConnection(currentUserEmail, email)) {
-            model.addAttribute("successMessage", "Nouvelle relation ajoutée avec succès.");
+
+        AddConnectionResult result = connectionService.addConnection(currentUserEmail, email);
+        if (result.isSuccess()) {
+            model.addAttribute("successMessage", result.getMessage());
         } else {
-            model.addAttribute("errorMessage", "Erreur : email non trouvé ou déjà dans votre liste.");
+            model.addAttribute("errorMessage", result.getMessage());
         }
         return "connections";
     }
