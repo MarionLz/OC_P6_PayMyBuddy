@@ -1,7 +1,7 @@
 package com.openclassrooms.paymybuddy.controller;
 
 import com.openclassrooms.paymybuddy.service.ConnectionService;
-import com.openclassrooms.paymybuddy.utils.AddConnectionResult;
+import com.openclassrooms.paymybuddy.utils.RequestResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +29,7 @@ public class ConnectionController {
 
         String currentUserEmail = principal.getName();
 
-        AddConnectionResult result = connectionService.addConnection(currentUserEmail, email);
+        RequestResult result = connectionService.addConnection(currentUserEmail, email);
         if (result.isSuccess()) {
             model.addAttribute("successMessage", result.getMessage());
         } else {
