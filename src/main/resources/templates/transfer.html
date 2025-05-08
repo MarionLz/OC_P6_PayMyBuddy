@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Transférer - Pay My Buddy</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        select, input[type="text"], input[type="number"] {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            flex: 1;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .message {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .success {
+            background-color: #e6f4ea;
+            color: #137333;
+        }
+        .error {
+            background-color: #fce8e6;
+            color: #d93025;
+        }
+        .balance-box {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .transactions {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        th {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Formulaire de transfert -->
+    <h2>Transférer</h2>
+
+    <!-- Messages flash -->
+    <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="message error" th:text="${errorMessage}"></div>
+
+    <form th:action="@{/transfer}" method="post" th:object="${transferRequest}">
+        <div class="form-row">
+            <!-- Liste déroulante des relations -->
+            <select th:field="*{receiverEmail}" required>
+                <option value="" disabled selected>Sélectionner une relation</option>
+                <option th:each="connection : ${connections}"
+                        th:value="${connection.email}"
+                        th:text="${connection.email}">
+                </option>
+            </select>
+
+            <!-- Description -->
+            <input type="text" th:field="*{description}" placeholder="Description" required/>
+
+            <!-- Montant -->
+            <input type="number"
+                   th:field="*{amount}"
+                   min="0"
+                   step="1"
+                   placeholder="Montant"
+                   required/>
+            <button type="submit">Payer</button>
+        </div>
+    </form>
+
+    <!-- Solde disponible -->
+    <div class="balance-box">
+        Solde disponible : <span th:text="${userBalance} + '€'">0€</span>
+    </div>
+
+    <!-- Liste déroulante des transactions -->
+    <div class="transactions">
+        <table>
+            <thead>
+            <tr>
+                <th>Relations</th>
+                <th>Description</th>
+                <th>Montant</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tx : ${transactions}">
+                <td th:text="${tx.name}">Nom</td>
+                <td th:text="${tx.description}">Description</td>
+                <td th:text="${tx.amount} + '€'">0€</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
