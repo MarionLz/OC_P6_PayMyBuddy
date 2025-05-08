@@ -1,11 +1,11 @@
 package com.openclassrooms.paymybuddy.utils;
 
-public class AddConnectionResult {
+public class RequestResult {
 
     private final boolean success;
     private final String message;
 
-    public AddConnectionResult(boolean success, String message) {
+    public RequestResult(boolean success, String message) {
         this.success = success;
         this.message = message;
     }

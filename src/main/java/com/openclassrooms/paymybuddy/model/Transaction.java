@@ -19,7 +19,7 @@ public class Transaction {
     private String description;
 
     @Column(nullable = false)
-    private Double amount;
+    private int amount;
 
     @ManyToOne
     @JoinColumn(name = "senderId")

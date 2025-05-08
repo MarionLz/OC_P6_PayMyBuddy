@@ -30,7 +30,7 @@ public class RegisterService {
         }
 
         Account account = new Account();
-        account.setBalance(1000.0);
+        account.setBalance(1000);
 
         User user = new User();
         user.setUsername(registerRequest.getUsername());

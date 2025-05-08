@@ -15,5 +15,5 @@ public class Account {
     private Long id;
 
     @Column(nullable = false)
-    private Double balance;
+    private int balance;
 }
