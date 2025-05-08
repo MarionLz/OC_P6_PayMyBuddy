@@ -1,5 +1,7 @@
 package com.openclassrooms.paymybuddy.service;
 
+import com.openclassrooms.paymybuddy.DTO.ConnectionDTO;
+import com.openclassrooms.paymybuddy.DTO.TransactionDTO;
 import com.openclassrooms.paymybuddy.DTO.TransferRequestDTO;
 import com.openclassrooms.paymybuddy.model.Account;
 import com.openclassrooms.paymybuddy.model.Transaction;
@@ -10,6 +12,8 @@ import com.openclassrooms.paymybuddy.repository.UserRepository;
 import com.openclassrooms.paymybuddy.utils.RequestResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TransferService {
@@ -22,6 +26,28 @@ public class TransferService {
 
     @Autowired
     AccountRepository accountRepository;
+
+    public List<ConnectionDTO> getConnections(String email) {
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getConnections().stream()
+                .map(connection -> new ConnectionDTO(connection.getEmail()))
+                .toList();
+    }
+
+    public int getUserBalance(String email) {
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getAccount().getBalance();
+    }
+
+    public List<TransactionDTO> getTransactions(String email) {
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getSentTransactions().stream()
+                .map(transaction -> new TransactionDTO(transaction.getReceiver().getUsername(), transaction.getDescription(), transaction.getAmount()))
+                .toList();
+    }
 
     public RequestResult transfer(TransferRequestDTO transferRequest, String currentUserEmail) {
 
