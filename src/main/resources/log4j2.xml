@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- Console output (INFO and above only) -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!-- File for DEBUG logs and above -->
+        <File name="FileDebug" fileName="logs/app-debug.log" append="true">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <!-- Application logs: DEBUG and up to file; INFO+ only to console -->
+        <Logger name="com.openclassrooms.safetynet" level="debug" additivity="false">
+            <AppenderRef ref="FileDebug"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- Root logger: only INFO+ to console -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

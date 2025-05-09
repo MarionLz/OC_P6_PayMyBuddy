@@ -84,6 +84,8 @@
 <div class="container">
     <div class="title">Pay My Buddy</div>
 
+    <div th:if="${registrationError}" th:text="${registrationError}" class="error global-error"></div>
+
     <form th:action="@{/register}" th:object="${registerRequest}" method="post">
         <label>
             <input type="text" th:field="*{username}" class="input-field" placeholder="Username" />
