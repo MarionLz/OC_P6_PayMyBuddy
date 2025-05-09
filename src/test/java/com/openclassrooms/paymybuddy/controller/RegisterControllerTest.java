@@ -56,6 +56,7 @@ public class RegisterControllerTest {
 
     @Test
     void testPostRequest_ShouldRedirectToLoginOnSuccessfulRegistration() throws Exception {
+
         RegisterRequestDTO request = new RegisterRequestDTO();
         request.setUsername("alice");
         request.setEmail("alice@example.com");
@@ -65,7 +66,6 @@ public class RegisterControllerTest {
                         .param("username", request.getUsername())
                         .param("email", request.getEmail())
                         .param("password", request.getPassword()))
-                .andDo(print()) // Ajoute ceci
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login?registered"));
 
