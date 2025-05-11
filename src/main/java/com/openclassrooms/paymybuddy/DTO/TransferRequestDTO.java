@@ -20,4 +20,10 @@ public class TransferRequestDTO {
     @NotNull(message = "Veuillez entrer un montant.")
     @Min(value = 1, message = "Le montant doit être supérieur à zéro.")
     private int amount;
+
+    public TransferRequestDTO(String description, String receiverEmail, int amount) {
+        this.description = description;
+        this.receiverEmail = receiverEmail;
+        this.amount = amount;
+    }
 }
