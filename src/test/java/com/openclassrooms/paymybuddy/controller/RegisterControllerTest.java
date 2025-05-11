@@ -35,6 +35,7 @@ public class RegisterControllerTest {
 
     @BeforeEach
     public void setup() {
+
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
         validator.afterPropertiesSet();
 
