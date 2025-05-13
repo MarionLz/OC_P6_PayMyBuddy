@@ -8,26 +8,32 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
+            background-color: #fff;
+        }
+
+        header {
+            padding: 20px;
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
-            padding: 20px 50px;
-            background-color: #ffffff;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .navbar a {
-            text-decoration: none;
-            margin: 0 15px;
+            align-items: center;
+            padding: 10px 20px;
+            gap: 30px;
+            font-size: 18px;
             font-weight: bold;
-            color: black;
         }
 
-        .navbar a.active {
-            color: #007bff;
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links a.active {
+            color: #1A73E8;
+            font-weight: bold;
         }
 
         .container {
@@ -38,7 +44,7 @@
         }
 
         h2 {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         form {
@@ -52,6 +58,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             width: 250px;
+            font-size: 18px;
         }
 
         button {
@@ -62,6 +69,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 18px;
         }
 
         button:hover {
@@ -85,15 +93,17 @@
 <body>
 
 <!-- Navigation -->
-<div class="navbar">
-    <div><strong>Pay My Buddy</strong></div>
-    <div>
-        <a href="/transfer">Transférer</a>
-        <a href="/profile">Profil</a>
-        <a href="/connections" class="active">Ajouter relation</a>
-        <a href="/logout">Se déconnecter</a>
-    </div>
-</div>
+<header>
+    <nav class="navbar">
+        <a th:href="@{/home}" class="brand">Pay My Buddy</a>
+        <div class="nav-links">
+            <a th:href="@{/transfer}">Transférer</a>
+            <a th:href="@{/profile}" class="active">Profil</a>
+            <a th:href="@{/connections}">Ajouter relation</a>
+            <a th:href="@{/logout}">Se déconnecter</a>
+        </div>
+    </nav>
+</header>
 
 <!-- Contenu principal -->
 <div class="container">
