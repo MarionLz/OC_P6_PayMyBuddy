@@ -31,8 +31,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // désactiver CSRF pour les tests Postman
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/images/**").permitAll()
-                        .requestMatchers("/", "/register", "/login", "/connections").permitAll() // autoriser l'accès libre ici
+                        .requestMatchers("home", "/register", "/login").permitAll() // autoriser l'accès libre ici
                         .anyRequest().authenticated() // le reste doit être authentifié
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendRedirect("/home?authError=1"))
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -42,7 +46,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/home")
                         .permitAll()
                 )
                 .build();
