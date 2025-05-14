@@ -22,10 +22,20 @@
             font-weight: bold;
         }
 
+        .brand {
+            font-weight: bold;
+            color: black;
+            text-decoration: none;
+        }
+
         .nav-links a {
             margin-left: 30px;
             text-decoration: none;
             font-weight: bold;
+        }
+
+        .nav-links a:visited {
+            color: black;
         }
 
         .nav-links a.active {
@@ -179,7 +189,7 @@
     <form th:action="@{/transfer}" method="post" th:object="${transferRequest}">
         <div class="form-row">
             <!-- Liste déroulante des relations -->
-            <select th:field="*{receiverEmail}" required>
+            <select th:field="*{receiverEmail}" placeholder="Sélectionner une relation" required>
                 <option value="" disabled selected>Sélectionner une relation</option>
                 <option th:each="connection : ${connections}"
                         th:value="${connection.email}"
@@ -225,6 +235,9 @@
             </tr>
             </thead>
             <tbody>
+            <tr th:if="${#lists.isEmpty(transactions)}">
+                <td colspan="3" style="text-align: center; padding: 20px;">Aucune transaction effectuée pour le moment.</td>
+            </tr>
             <tr th:each="tx : ${transactions}">
                 <td class="table-data align-left" th:text="${tx.name}">Nom</td>
                 <td class="table-data align-center" th:text="${tx.description}">Description</td>
