@@ -7,76 +7,170 @@
         body {
             font-family: sans-serif;
         }
+
+        header {
+            padding: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            gap: 30px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links a.active {
+            color: #1A73E8;
+            font-weight: bold;
+        }
+
         .container {
             max-width: 800px;
             margin: 40px auto;
         }
+
         .form-row {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 80px;
             align-items: center;
         }
+
+        select {
+            background-color: #fff;
+        }
+
         select, input[type="text"], input[type="number"] {
-            padding: 10px;
+            padding: 20px 10px;
             border-radius: 6px;
             border: 1px solid #ccc;
             flex: 1;
+            font-size: 18px;
         }
+
+        select, input[type="text"] {
+            margin-right: 10px;
+        }
+
+        .amount-wrapper input[type="number"] {
+            width: 90px;
+            height: 30px;
+            margin-right: 40px;
+        }
+        .amount-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            pointer-events: none;
+        }
+
+        .amount-wrapper input {
+            padding-left: 30px;
+            width: 100%;
+        }
+
         button {
-            padding: 10px 20px;
+            padding: 20px 20px;
             background-color: #1a73e8;
             color: white;
             border: none;
             border-radius: 6px;
             cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
         }
+
         .message {
             padding: 10px;
             border-radius: 6px;
             margin-bottom: 20px;
         }
+
         .success {
-            background-color: #e6f4ea;
-            color: #137333;
+            color: green;
         }
+
         .error {
-            background-color: #fce8e6;
-            color: #d93025;
+            color: red;
         }
+
         .balance-box {
             background-color: #f1f3f4;
             padding: 15px;
             border-radius: 8px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
+
         .transactions {
             max-height: 200px;
             overflow-y: auto;
             border: 1px solid #ccc;
             border-radius: 8px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
+
+        .table-title {
+            padding: 12px;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        .table-sections, .table-data {
             padding: 12px;
             border-bottom: 1px solid #eee;
             text-align: left;
         }
-        th {
-            background-color: #f9f9f9;
+
+        .align-left {
+            text-align: left;
         }
+        .align-center {
+            text-align: center;
+        }
+        .align-right {
+            text-align: right;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="container">
+<!-- Navigation -->
+<header>
+    <nav class="navbar">
+        <a th:href="@{/home}" class="brand">Pay My Buddy</a>
+        <div class="nav-links">
+            <a th:href="@{/transfer}" class="active">Transférer</a>
+            <a th:href="@{/profile}">Profil</a>
+            <a th:href="@{/connections}">Ajouter relation</a>
+            <a th:href="@{/logout}">Se déconnecter</a>
+        </div>
+    </nav>
+</header>
 
-    <!-- Formulaire de transfert -->
-    <h2>Transférer</h2>
+<div class="container">
 
     <!-- Messages flash -->
     <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
@@ -97,12 +191,15 @@
             <input type="text" th:field="*{description}" placeholder="Description" required/>
 
             <!-- Montant -->
-            <input type="number"
-                   th:field="*{amount}"
-                   min="0"
-                   step="1"
-                   placeholder="Montant"
-                   required/>
+            <div class="amount-wrapper">
+                <span class="currency-symbol">€</span>
+                <input type="number"
+                       th:field="*{amount}"
+                       min="0"
+                       step="1"
+                       placeholder="Montant"
+                       required/>
+            </div>
             <button type="submit">Payer</button>
         </div>
     </form>
@@ -117,16 +214,21 @@
         <table>
             <thead>
             <tr>
-                <th>Relations</th>
-                <th>Description</th>
-                <th>Montant</th>
+                <th class="table-title" colspan="3">
+                    Mes transactions
+                </th>
+            </tr>
+            <tr>
+                <th class="table-sections align-left">Relations</th>
+                <th class="table-sections align-center">Description</th>
+                <th class="table-sections align-right">Montant</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="tx : ${transactions}">
-                <td th:text="${tx.name}">Nom</td>
-                <td th:text="${tx.description}">Description</td>
-                <td th:text="${tx.amount} + '€'">0€</td>
+                <td class="table-data align-left" th:text="${tx.name}">Nom</td>
+                <td class="table-data align-center" th:text="${tx.description}">Description</td>
+                <td class="table-data align-right" th:text="${tx.amount} + '€'">0€</td>
             </tr>
             </tbody>
         </table>
