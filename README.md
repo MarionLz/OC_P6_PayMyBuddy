@@ -28,7 +28,7 @@ Voici les pages accessibles via l’interface web :
 
 Voici une vue du schéma de base de données utilisé dans l'application :
 
-![Modèle Physique de Données](docs/img/mpd_oc6.png)
+![Modèle Physique de Données](docs/img/mpd_oc6.PNG)
 
 ## 🛠️ Technologies
 
