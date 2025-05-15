@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 @Controller
 public class HomeController {
 
-    @GetMapping("/home")
+    @GetMapping({"/", "/home"})
     public String showHomePage(@RequestParam(value = "authError", required = false) String authError, Model model) {
 
         if (authError != null) {
