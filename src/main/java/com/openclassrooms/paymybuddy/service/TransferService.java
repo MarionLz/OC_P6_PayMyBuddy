@@ -10,6 +10,7 @@ import com.openclassrooms.paymybuddy.repository.AccountRepository;
 import com.openclassrooms.paymybuddy.repository.TransactionRepository;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import com.openclassrooms.paymybuddy.utils.RequestResult;
+import com.openclassrooms.paymybuddy.utils.UserUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,7 @@ public class TransferService {
     public List<ConnectionDTO> getConnections(String email) {
 
         logger.info("Fetching connections for user '{}'", email);
-        User user = userRepository.findByEmail(email).orElseThrow(() -> {
-            logger.error("User '{}' not found", email);
-            return new RuntimeException("User not found");
-        });
+        User user = UserUtils.findUserByEmailOrThrow(userRepository, email);
 
         return user.getConnections().stream()
                 .map(connection -> new ConnectionDTO(connection.getEmail()))
@@ -47,20 +45,14 @@ public class TransferService {
     public int getUserBalance(String email) {
 
         logger.info("Fetching balance for user '{}'", email);
-        User user = userRepository.findByEmail(email).orElseThrow(() -> {
-            logger.error("User '{}' not found", email);
-            return new RuntimeException("User not found");
-        });
+        User user = UserUtils.findUserByEmailOrThrow(userRepository, email);
         return user.getAccount().getBalance();
     }
 
     public List<TransactionDTO> getTransactions(String email) {
 
         logger.info("Fetching sent transactions for user '{}'", email);
-        User user = userRepository.findByEmail(email).orElseThrow(() -> {
-            logger.error("User '{}' not found", email);
-            return new RuntimeException("User not found");
-        });
+        User user = UserUtils.findUserByEmailOrThrow(userRepository, email);
         return user.getSentTransactions().stream()
                 .map(transaction -> new TransactionDTO(transaction.getReceiver().getUsername(), transaction.getDescription(), transaction.getAmount()))
                 .toList();
@@ -71,8 +63,8 @@ public class TransferService {
         logger.info("User '{}' initiates a transfer to '{}', amount: {}",
                 currentUserEmail, transferRequest.getReceiverEmail(), transferRequest.getAmount());
 
-        User currentUser = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> new RuntimeException("Current user not found"));
-        User receiver = userRepository.findByEmail(transferRequest.getReceiverEmail()).orElseThrow(() -> new RuntimeException("Receiver not found"));
+        User currentUser = UserUtils.findUserByEmailOrThrow(userRepository, currentUserEmail);
+        User receiver = UserUtils.findUserByEmailOrThrow(userRepository, transferRequest.getReceiverEmail());
 
         Account currentUserAccount = currentUser.getAccount();
         int newBalance = currentUserAccount.getBalance() - transferRequest.getAmount();
