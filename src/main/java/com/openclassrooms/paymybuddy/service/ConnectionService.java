@@ -3,6 +3,7 @@ package com.openclassrooms.paymybuddy.service;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import com.openclassrooms.paymybuddy.utils.RequestResult;
+import com.openclassrooms.paymybuddy.utils.UserUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,7 @@ public class ConnectionService {
 
         logger.info("Attempting to add connection from '{}' to '{}'", currentUserEmail, targetEmail);
 
-        User currentUser = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> {
-            logger.error("Current user '{}' not found in database.", currentUserEmail);
-            return new RuntimeException("Current user not found");
-        });
+        User currentUser = UserUtils.findUserByEmailOrThrow(userRepository, currentUserEmail);
 
         if (currentUserEmail.equals(targetEmail)) {
             logger.warn("User '{}' attempted to connect with themselves.", currentUserEmail);

@@ -2,6 +2,7 @@ package com.openclassrooms.paymybuddy.service;
 
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
+import com.openclassrooms.paymybuddy.utils.UserUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,7 @@ public class LoginService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         logger.info("Attempting to load user with email: {}", email);
-        User user = userRepository.findByEmail(email).orElseThrow(() -> {
-            logger.error("Current user '{}' not found in database.", email);
-            return new UsernameNotFoundException("User not found.");
-        });
+        User user = UserUtils.findUserByEmailOrThrow(userRepository, email);
         logger.info("User with email '{}' successfully loaded.", email);
 
         return new org.springframework.security.core.userdetails.User(

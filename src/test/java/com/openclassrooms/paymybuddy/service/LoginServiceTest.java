@@ -1,5 +1,6 @@
 package com.openclassrooms.paymybuddy.service;
 
+import com.openclassrooms.paymybuddy.exceptions.UserNotFoundException;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ public class LoginServiceTest {
 
         when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(java.util.Optional.empty());
 
-        assertThrows(UsernameNotFoundException.class, () -> loginService.loadUserByUsername("nonexistent@example.com"));
+        assertThrows(UserNotFoundException.class, () -> loginService.loadUserByUsername("nonexistent@example.com"));
 
         verify(userRepository, times(1)).findByEmail("nonexistent@example.com");
     }
