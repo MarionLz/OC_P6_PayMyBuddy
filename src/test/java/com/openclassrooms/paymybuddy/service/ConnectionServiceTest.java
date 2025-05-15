@@ -14,15 +14,28 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the ConnectionService class.
+ * Verifies the behavior of the addConnection method under various scenarios.
+ */
 @ExtendWith(MockitoExtension.class)
 public class ConnectionServiceTest {
 
+    /**
+     * Mocked UserRepository for simulating database interactions.
+     */
     @Mock
     private UserRepository userRepository;
 
+    /**
+     * Injected instance of ConnectionService to be tested.
+     */
     @InjectMocks
     private ConnectionService connectionService;
 
+    /**
+     * Tests that addConnection returns success when a new connection is successfully added.
+     */
     @Test
     void testAddConnection_ShouldReturnSuccessWhenUserIsAdded() {
 
@@ -42,6 +55,9 @@ public class ConnectionServiceTest {
         verify(userRepository, times(1)).save(currentUser);
     }
 
+    /**
+     * Tests that addConnection returns an error when a user tries to add themselves as a connection.
+     */
     @Test
     void testAddConnection_ShouldReturnErrorWhenAddingSelf() {
 
@@ -58,6 +74,9 @@ public class ConnectionServiceTest {
         verify(userRepository, never()).save(any());
     }
 
+    /**
+     * Tests that addConnection returns an error when the user to be added does not exist.
+     */
     @Test
     void testAddConnection_ShouldReturnErrorWhenUserDoesNotExist() {
 
@@ -75,6 +94,9 @@ public class ConnectionServiceTest {
         verify(userRepository, never()).save(any());
     }
 
+    /**
+     * Tests that addConnection returns an error when the user is already connected.
+     */
     @Test
     void testAddConnection_ShouldReturnErrorWhenUserAlreadyConnected() {
 

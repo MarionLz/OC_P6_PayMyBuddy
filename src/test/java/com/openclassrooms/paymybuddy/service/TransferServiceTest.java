@@ -23,22 +23,42 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+/**
+ * Unit tests for the TransferService class.
+ * Verifies the behavior of transfer-related methods under various scenarios.
+ */
 @ExtendWith(MockitoExtension.class)
 class TransferServiceTest {
 
+    /**
+     * Mocked UserRepository for simulating user-related database interactions.
+     */
     @Mock
     private UserRepository userRepository;
+
+    /**
+     * Mocked TransactionRepository for simulating transaction-related database interactions.
+     */
     @Mock
     private TransactionRepository transactionRepository;
+
+    /**
+     * Mocked AccountRepository for simulating account-related database interactions.
+     */
     @Mock
     private AccountRepository accountRepository;
 
+    /**
+     * Injected instance of TransferService to be tested.
+     */
     @InjectMocks
     private TransferService transferService;
 
+    /**
+     * Tests that getConnections returns a list of connections for a valid user.
+     */
     @Test
     void testGetConnections_ShouldReturnConnectionsForValidUser() {
-
         User user = new User();
         user.setEmail("user@example.com");
         User connection = new User();
@@ -53,17 +73,21 @@ class TransferServiceTest {
         assertEquals("connection@example.com", connections.get(0).getEmail());
     }
 
+    /**
+     * Tests that getConnections throws an exception for a non-existent user.
+     */
     @Test
     void testGetConnections_ShouldThrowExceptionForNonExistentUser() {
-
         when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> transferService.getConnections("nonexistent@example.com"));
     }
 
+    /**
+     * Tests that getUserBalance returns the correct balance for a valid user.
+     */
     @Test
     void testGetUserBalance_ShouldReturnCorrectBalance() {
-
         User user = new User();
         Account account = new Account();
         account.setBalance(500);
@@ -76,17 +100,21 @@ class TransferServiceTest {
         assertEquals(500, balance);
     }
 
+    /**
+     * Tests that getUserBalance throws an exception for a non-existent user.
+     */
     @Test
     void testGetUserBalance_ShouldThrowExceptionForNonExistentUser() {
-
         when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> transferService.getUserBalance("nonexistent@example.com"));
     }
 
+    /**
+     * Tests that getTransactions returns a list of transactions for a valid user.
+     */
     @Test
     void testGetTransactions_ShouldReturnTransactionsForValidUser() {
-
         String email = "user@example.com";
         User user = new User();
         user.setEmail(email);
@@ -110,17 +138,21 @@ class TransferServiceTest {
         assertEquals(100, result.get(0).getAmount());
     }
 
+    /**
+     * Tests that getTransactions throws an exception for a non-existent user.
+     */
     @Test
     void testGetTransactions_ShouldThrowExceptionForNonExistentUser() {
-
         when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> transferService.getUserBalance("nonexistent@example.com"));
     }
 
+    /**
+     * Tests that transfer succeeds when the sender has sufficient balance.
+     */
     @Test
     void testTransfer_ShouldSucceedWhenSufficientBalance() {
-
         User sender = new User();
         Account senderAccount = new Account();
         senderAccount.setBalance(200);
@@ -145,9 +177,11 @@ class TransferServiceTest {
         assertEquals(100, receiverAccount.getBalance());
     }
 
+    /**
+     * Tests that transfer fails when the sender has insufficient balance.
+     */
     @Test
     void testTransfer_ShouldFailWhenInsufficientBalance() {
-
         User sender = new User();
         Account senderAccount = new Account();
         senderAccount.setBalance(50);

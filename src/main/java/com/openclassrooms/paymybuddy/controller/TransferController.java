@@ -21,6 +21,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Controller for handling transfer-related requests.
+ * Manages the display of the transfer page and the processing of transfer operations.
+ */
 @Controller
 @RequestMapping("/transfer")
 public class TransferController {
@@ -30,6 +34,14 @@ public class TransferController {
     @Autowired
     TransferService transferService;
 
+    /**
+     * Handles GET requests to the /transfer endpoint.
+     * Displays the transfer page with the user's connections, balance, and transaction history.
+     *
+     * @param model the {@link Model} object used to pass attributes to the view.
+     * @param principal the {@link Principal} object representing the currently authenticated user.
+     * @return the name of the view to render ("transfer").
+     */
     @GetMapping
     public String showTransferPage(Model model, Principal principal) {
 
@@ -51,6 +63,19 @@ public class TransferController {
         return "transfer";
     }
 
+    /**
+     * Handles POST requests to the /transfer endpoint.
+     * Processes the transfer form submitted by the user.
+     * Validates the input data and attempts to perform the transfer.
+     * On success, redirects to the transfer page with a success message.
+     * On failure, redirects to the transfer page with error messages.
+     *
+     * @param transferRequest the {@link TransferRequestDTO} containing the transfer details.
+     * @param bindingResult the {@link BindingResult} object containing validation results.
+     * @param redirectAttributes the {@link RedirectAttributes} object used to pass flash attributes.
+     * @param principal the {@link Principal} object representing the currently authenticated user.
+     * @return a redirection string to the transfer page.
+     */
     @PostMapping
     public String processTransfer(@ModelAttribute("transferRequest") @Valid TransferRequestDTO transferRequest,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
