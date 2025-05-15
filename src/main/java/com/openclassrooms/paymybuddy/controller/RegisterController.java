@@ -56,7 +56,7 @@ public class RegisterController {
     public String registerNewUser(@ModelAttribute("registerRequest") @Valid RegisterRequestDTO registerRequest,
                                   BindingResult bindingResult, Model model) {
 
-        logger.info("POST request to /register with data: {}", registerRequest);
+        logger.info("POST request to /register");
 
         if (bindingResult.hasErrors()) {
             logger.error("Validation errors occurred: {}", bindingResult.getAllErrors());

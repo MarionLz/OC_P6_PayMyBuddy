@@ -17,7 +17,7 @@
 
     <Loggers>
         <!-- Application logs: DEBUG and up to file; INFO+ only to console -->
-        <Logger name="com.openclassrooms.safetynet" level="debug" additivity="false">
+        <Logger name="com.openclassrooms.paymybuddy" level="debug" additivity="false">
             <AppenderRef ref="FileDebug"/>
             <AppenderRef ref="Console"/>
         </Logger>

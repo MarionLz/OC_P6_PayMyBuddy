@@ -33,6 +33,12 @@ public class CustomErrorController implements ErrorController {
         logger.info("Request /error received");
 
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        Object uri = request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
+        Object message = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+
+        logger.info("Error path: {}", uri);
+        logger.info("Error status code: {}", status);
+        logger.info("Error message: {}", message);
 
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
