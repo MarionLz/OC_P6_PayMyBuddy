@@ -14,8 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import java.security.Principal;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 public class HomeControllerTest {
@@ -39,5 +38,23 @@ public class HomeControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("home"));
+    }
+
+    @Test
+    void testShowHomePage_WithAuthError_ShouldAddAuthErrorMessage() throws Exception {
+        mockMvc.perform(get("/home").param("authError", "1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("home"))
+                .andExpect(model().attributeExists("errorMessage"))
+                .andExpect(model().attribute("errorMessage", "Vous devez être connecté pour accéder à cette page."));
+    }
+
+    @Test
+    void testShowHomePage_WithNotFound_ShouldAddNotFoundMessage() throws Exception {
+        mockMvc.perform(get("/home").param("notFound", "1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("home"))
+                .andExpect(model().attributeExists("errorMessage"))
+                .andExpect(model().attribute("errorMessage", "Page introuvable."));
     }
 }
