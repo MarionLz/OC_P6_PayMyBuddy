@@ -24,8 +24,11 @@ public class LoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        logger.debug("Attempting to load user with email: {}", email);
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        logger.info("Attempting to load user with email: {}", email);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> {
+            logger.error("Current user '{}' not found in database.", email);
+            return new UsernameNotFoundException("User not found.");
+        });
         logger.info("User with email '{}' successfully loaded.", email);
 
         return new org.springframework.security.core.userdetails.User(

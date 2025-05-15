@@ -27,7 +27,7 @@ public class HomeController {
             model.addAttribute("errorMessage", "Page introuvable.");
         }
         else {
-            logger.debug("Home page accessed without error parameters.");
+            logger.info("Home page accessed without error parameters.");
         }
         return "home";
     }

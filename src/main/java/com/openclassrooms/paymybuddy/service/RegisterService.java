@@ -36,17 +36,15 @@ public class RegisterService {
 
         Account account = new Account();
         account.setBalance(1000);
-        logger.debug("New account created");
 
         User user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setAccount(account);
-        logger.debug("New user created");
 
         accountRepository.save(account);
         userRepository.save(user);
-        logger.debug("User and account saved");
+        logger.info("User and account saved");
     }
 }
