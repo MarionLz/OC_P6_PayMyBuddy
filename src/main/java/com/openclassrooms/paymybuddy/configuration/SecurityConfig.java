@@ -1,6 +1,7 @@
 package com.openclassrooms.paymybuddy.configuration;
 
 import com.openclassrooms.paymybuddy.service.LoginService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,12 +32,18 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // désactiver CSRF pour les tests Postman
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/images/**").permitAll()
-                        .requestMatchers("/", "home", "/register", "/login").permitAll() // autoriser l'accès libre ici
+                        .requestMatchers("/", "/home", "/register", "/login", "/error").permitAll() // autoriser l'accès libre ici
                         .anyRequest().authenticated() // le reste doit être authentifié
                 )
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) ->
-                                response.sendRedirect("/home?authError=1"))
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            String uri = request.getRequestURI();
+                            if (uri.equals("/profile") || uri.equals("/transfer") || uri.equals("/connections")) {
+                                response.sendRedirect("/home?authError=1");
+                            } else {
+                                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                            }
+                        })
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
