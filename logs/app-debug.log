@@ -3253,3 +3253,17 @@ java.lang.Throwable: Runtime.exit(130)
 2025-05-15 19:59:25 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
 2025-05-15 19:59:25 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
 2025-05-15 19:59:35 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 10.028 seconds (process running for 10.859)
+2025-05-15 20:05:24 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Starting PaymybuddyApplication using Java 21.0.5 with PID 15436 (C:\Workspace\intellij\OC_P6_PayMyBuddy\target\classes started by Cy in C:\Workspace\intellij\OC_P6_PayMyBuddy)
+2025-05-15 20:05:24 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
+2025-05-15 20:05:24 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-15 20:05:35 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 10.942 seconds (process running for 11.705)
+2025-05-15 21:42:03 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Starting PaymybuddyApplication using Java 21.0.5 with PID 19980 (C:\Workspace\intellij\OC_P6_PayMyBuddy\target\classes started by Cy in C:\Workspace\intellij\OC_P6_PayMyBuddy)
+2025-05-15 21:42:03 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
+2025-05-15 21:42:03 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-15 21:42:11 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 9.286 seconds (process running for 16.996)
+2025-05-15 21:42:34 [http-nio-8080-exec-3] ERROR com.openclassrooms.paymybuddy.utils.UserUtils - User 'Marion' not found
+2025-05-15 21:46:16 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Starting PaymybuddyApplication using Java 21.0.5 with PID 7128 (C:\Workspace\intellij\OC_P6_PayMyBuddy\target\classes started by Cy in C:\Workspace\intellij\OC_P6_PayMyBuddy)
+2025-05-15 21:46:16 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
+2025-05-15 21:46:16 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-15 21:46:24 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 9.172 seconds (process running for 10.263)
+2025-05-15 21:46:38 [http-nio-8080-exec-3] ERROR com.openclassrooms.paymybuddy.utils.UserUtils - User 'Marion' not found
