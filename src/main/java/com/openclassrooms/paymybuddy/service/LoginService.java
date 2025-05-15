@@ -2,6 +2,8 @@ package com.openclassrooms.paymybuddy.service;
 
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,13 +16,17 @@ import java.util.Collections;
 @Service
 public class LoginService implements UserDetailsService {
 
+    private static final Logger logger = LogManager.getLogger("HomeController");
+
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
+        logger.debug("Attempting to load user with email: {}", email);
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        logger.info("User with email '{}' successfully loaded.", email);
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
