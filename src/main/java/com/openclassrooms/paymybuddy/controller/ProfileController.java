@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
 
+/**
+ * Controller for handling profile-related requests.
+ * Manages the display of the user's profile page.
+ */
 @Controller
 public class ProfileController {
 
@@ -20,6 +24,15 @@ public class ProfileController {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * Handles GET requests to the /profile endpoint.
+     * Displays the profile page of the currently authenticated user.
+     *
+     * @param model the {@link Model} object used to pass attributes to the view.
+     * @param principal the {@link Principal} object representing the currently authenticated user.
+     * @return the name of the view to render ("profile").
+     * @throws UsernameNotFoundException if the user is not found in the database.
+     */
     @GetMapping("/profile")
     public String showProfile(Model model, Principal principal) {
 

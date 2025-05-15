@@ -22,17 +22,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+/**
+ * Unit tests for the RegisterController class.
+ * Verifies the behavior of the registration-related endpoints and interactions with the service layer.
+ */
 @ExtendWith(MockitoExtension.class)
 public class RegisterControllerTest {
 
+    /**
+     * MockMvc instance for simulating HTTP requests and testing controller endpoints.
+     */
     private MockMvc mockMvc;
 
+    /**
+     * Mocked RegisterService for simulating service layer behavior.
+     */
     @Mock
     private RegisterService registerService;
 
+    /**
+     * Injected instance of RegisterController to be tested.
+     */
     @InjectMocks
     private RegisterController registerController;
 
+    /**
+     * Sets up the test environment before each test.
+     * Configures the MockMvc instance with the RegisterController, a validator, and a view resolver.
+     */
     @BeforeEach
     public void setup() {
 
@@ -45,6 +62,12 @@ public class RegisterControllerTest {
                 .build();
     }
 
+    /**
+     * Tests that the GET /register endpoint returns the "register" view
+     * and includes a "registerRequest" attribute in the model.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     public void testGetRegisterPage() throws Exception {
 
@@ -54,6 +77,12 @@ public class RegisterControllerTest {
                 .andExpect(model().attributeExists("registerRequest"));
     }
 
+    /**
+     * Tests that a successful POST /register request redirects to the login page
+     * with a "registered" parameter.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void testPostRequest_ShouldRedirectToLoginOnSuccessfulRegistration() throws Exception {
 
@@ -72,6 +101,12 @@ public class RegisterControllerTest {
         verify(registerService).register(any(RegisterRequestDTO.class));
     }
 
+    /**
+     * Tests that a POST /register request with validation errors
+     * returns to the "register" view and includes field errors in the model.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void testPostRequest_ShouldReturnToRegisterPageOnValidationError() throws Exception {
 
@@ -85,6 +120,12 @@ public class RegisterControllerTest {
                 .andExpect(model().attributeHasFieldErrors("registerRequest", "username", "password"));
     }
 
+    /**
+     * Tests that a POST /register request with an existing user
+     * returns to the "register" view and includes a registration error in the model.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void testPostRequest_ShouldReturnToRegisterPageWhenUserAlreadyExists() throws Exception {
 

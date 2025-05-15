@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class for handling user transfers and related operations.
+ * Provides functionality to manage connections, balances, transactions, and transfers.
+ */
 @Service
 public class TransferService {
 
@@ -32,6 +36,12 @@ public class TransferService {
     @Autowired
     AccountRepository accountRepository;
 
+    /**
+     * Retrieves the list of connections for a user identified by their email.
+     *
+     * @param email the email of the user whose connections are to be fetched
+     * @return a list of ConnectionDTO objects representing the user's connections
+     */
     public List<ConnectionDTO> getConnections(String email) {
 
         logger.info("Fetching connections for user '{}'", email);
@@ -42,6 +52,12 @@ public class TransferService {
                 .toList();
     }
 
+    /**
+     * Retrieves the balance of a user identified by their email.
+     *
+     * @param email the email of the user whose balance is to be fetched
+     * @return the balance of the user's account
+     */
     public int getUserBalance(String email) {
 
         logger.info("Fetching balance for user '{}'", email);
@@ -49,6 +65,12 @@ public class TransferService {
         return user.getAccount().getBalance();
     }
 
+    /**
+     * Retrieves the list of transactions sent by a user identified by their email.
+     *
+     * @param email the email of the user whose transactions are to be fetched
+     * @return a list of TransactionDTO objects representing the user's sent transactions
+     */
     public List<TransactionDTO> getTransactions(String email) {
 
         logger.info("Fetching sent transactions for user '{}'", email);
@@ -58,6 +80,14 @@ public class TransferService {
                 .toList();
     }
 
+    /**
+     * Processes a transfer request from the current user to a receiver.
+     * Updates the balances of both users and records the transaction.
+     *
+     * @param transferRequest the details of the transfer request
+     * @param currentUserEmail the email of the user initiating the transfer
+     * @return a RequestResult indicating the success or failure of the transfer
+     */
     public RequestResult transfer(TransferRequestDTO transferRequest, String currentUserEmail) {
 
         logger.info("User '{}' initiates a transfer to '{}', amount: {}",

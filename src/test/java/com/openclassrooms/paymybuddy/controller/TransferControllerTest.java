@@ -27,34 +27,67 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+/**
+ * Unit tests for the TransferController class.
+ * Verifies the behavior of the transfer-related endpoints and interactions with the service layer.
+ */
 @ExtendWith(MockitoExtension.class)
 public class TransferControllerTest {
 
+    /**
+     * MockMvc instance for simulating HTTP requests and testing controller endpoints.
+     */
     private MockMvc mockMvc;
 
+    /**
+     * Mocked TransferService for simulating service layer behavior.
+     */
     @Mock
     private TransferService transferService;
+
+    /**
+     * Mocked Principal for simulating the currently authenticated user.
+     */
     @Mock
     private Principal principal;
+
+    /**
+     * Mocked RedirectAttributes for simulating flash attributes in redirects.
+     */
     @Mock
     private RedirectAttributes redirectAttributes;
+
+    /**
+     * Mocked BindingResult for simulating validation results.
+     */
     @Mock
     private BindingResult bindingResult;
 
+    /**
+     * Injected instance of TransferController to be tested.
+     */
     @InjectMocks
     private TransferController transferController;
 
+    /**
+     * Sets up the test environment before each test.
+     * Configures the MockMvc instance with the TransferController and a view resolver.
+     */
     @BeforeEach
     public void setup() {
-
         mockMvc = MockMvcBuilders.standaloneSetup(transferController)
                 .setViewResolvers(new InternalResourceViewResolver("/templates/", ".html"))
                 .build();
     }
 
+    /**
+     * Tests that the GET /transfer endpoint populates the model with user data
+     * and returns the "transfer" view.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void testShowTransferPage_ShouldPopulateModelAndReturnView() throws Exception {
-
         when(principal.getName()).thenReturn("user@example.com");
         List<ConnectionDTO> mockConnections = List.of(new ConnectionDTO("friend@example.com"));
         List<TransactionDTO> mockTransactions = List.of(new TransactionDTO("Marion", "remboursement", 100));
@@ -72,9 +105,13 @@ public class TransferControllerTest {
                 .andExpect(model().attribute("transactions", mockTransactions));
     }
 
+    /**
+     * Tests that a POST /transfer request redirects to the transfer page.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void testProcessTransfer_ShouldRedirect() throws Exception {
-
         mockMvc.perform(post("/transfer")
                         .param("description", "Dinner")
                         .param("connectionEmail", "friend@example.com")
@@ -84,9 +121,12 @@ public class TransferControllerTest {
                 .andExpect(redirectedUrl("/transfer"));
     }
 
+    /**
+     * Tests that a successful transfer adds a success message to the redirect attributes
+     * and redirects to the transfer page.
+     */
     @Test
     void testProcessTransfer_ShouldRedirectWithSuccessMessage() {
-
         TransferRequestDTO transferRequest = new TransferRequestDTO("Test", "friend@example.com", 100);
 
         when(principal.getName()).thenReturn("user@example.com");
@@ -100,9 +140,12 @@ public class TransferControllerTest {
         verify(redirectAttributes).addFlashAttribute("successMessage", "Transfer completed");
     }
 
+    /**
+     * Tests that a failed transfer adds an error message to the redirect attributes
+     * and redirects to the transfer page.
+     */
     @Test
     void testProcessTransfer_ShouldRedirectWithErrorMessage() {
-
         TransferRequestDTO transferRequest = new TransferRequestDTO("Test", "friend@example.com", 100);
 
         when(principal.getName()).thenReturn("user@example.com");
@@ -116,9 +159,12 @@ public class TransferControllerTest {
         verify(redirectAttributes).addFlashAttribute("errorMessage", "Transfer failed");
     }
 
+    /**
+     * Tests that a transfer request with validation errors adds the errors
+     * to the redirect attributes and redirects to the transfer page.
+     */
     @Test
     public void testProcessTransfer_ShouldRedirectWithValidationErrors() {
-
         TransferRequestDTO transferRequest = new TransferRequestDTO("Test", "friend@example.com", -1);
 
         when(bindingResult.hasErrors()).thenReturn(true);

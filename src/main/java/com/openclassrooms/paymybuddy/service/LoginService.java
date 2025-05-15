@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
+/**
+ * Service class for managing user authentication and loading user details.
+ * Implements the UserDetailsService interface to integrate with Spring Security.
+ */
 @Service
 public class LoginService implements UserDetailsService {
 
@@ -22,6 +26,14 @@ public class LoginService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Loads a user by their email address.
+     * Retrieves the user from the database and converts it into a UserDetails object for Spring Security.
+     *
+     * @param email the email of the user to load
+     * @return a UserDetails object containing the user's information
+     * @throws UsernameNotFoundException if no user is found with the given email
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 

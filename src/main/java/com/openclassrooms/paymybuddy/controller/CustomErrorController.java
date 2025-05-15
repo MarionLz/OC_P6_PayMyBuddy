@@ -10,11 +10,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Custom error controller to handle application errors.
+ * Redirects users to appropriate pages based on the error status code.
+ */
 @Controller
 public class CustomErrorController implements ErrorController {
 
     private static final Logger logger = LogManager.getLogger("CustomErrorController");
 
+    /**
+     * Handles requests to the /error endpoint.
+     * Redirects to the home page with a specific query parameter if the error is a 404 (Not Found).
+     * For other errors, redirects to the home page without additional parameters.
+     *
+     * @param request the {@link HttpServletRequest} containing error details.
+     * @return a redirection string to the appropriate page.
+     */
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request) {
 
