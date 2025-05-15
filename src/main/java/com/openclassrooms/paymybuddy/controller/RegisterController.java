@@ -49,6 +49,7 @@ public class RegisterController {
             logger.error("User already exists: {}", ex.getMessage());
             return "register";
         }
+        logger.info("User registered successfully: {}", registerRequest.getEmail());
         return "redirect:/login?registered";
     }
 }
