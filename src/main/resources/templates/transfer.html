@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Transférer - Pay My Buddy</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        header {
+            padding: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            gap: 30px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .brand {
+            font-weight: bold;
+            color: black;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links a:visited {
+            color: black;
+        }
+
+        .nav-links a.active {
+            color: #1A73E8;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 80px;
+            align-items: center;
+        }
+
+        select {
+            background-color: #fff;
+        }
+
+        select, input[type="text"], input[type="number"] {
+            padding: 20px 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            flex: 1;
+            font-size: 18px;
+        }
+
+        select, input[type="text"] {
+            margin-right: 10px;
+        }
+
+        .amount-wrapper input[type="number"] {
+            width: 90px;
+            height: 30px;
+            margin-right: 40px;
+        }
+        .amount-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            pointer-events: none;
+        }
+
+        .amount-wrapper input {
+            padding-left: 30px;
+            width: 100%;
+        }
+
+        button {
+            padding: 20px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .balance-box {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .transactions {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-title {
+            padding: 12px;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        .table-sections, .table-data {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .align-left {
+            text-align: left;
+        }
+        .align-center {
+            text-align: center;
+        }
+        .align-right {
+            text-align: right;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<header>
+    <nav class="navbar">
+        <a th:href="@{/home}" class="brand">Pay My Buddy</a>
+        <div class="nav-links">
+            <a th:href="@{/transfer}" class="active">Transférer</a>
+            <a th:href="@{/profile}">Profil</a>
+            <a th:href="@{/connections}">Ajouter relation</a>
+            <a th:href="@{/logout}">Se déconnecter</a>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+
+    <!-- Messages flash -->
+    <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="message error" th:text="${errorMessage}"></div>
+
+    <form th:action="@{/transfer}" method="post" th:object="${transferRequest}">
+        <div class="form-row">
+            <!-- Liste déroulante des relations -->
+            <select th:field="*{receiverEmail}" placeholder="Sélectionner une relation" required>
+                <option value="" disabled selected>Sélectionner une relation</option>
+                <option th:each="connection : ${connections}"
+                        th:value="${connection.email}"
+                        th:text="${connection.email}">
+                </option>
+            </select>
+
+            <!-- Description -->
+            <input type="text" th:field="*{description}" placeholder="Description" required/>
+
+            <!-- Montant -->
+            <div class="amount-wrapper">
+                <span class="currency-symbol">€</span>
+                <input type="number"
+                       th:field="*{amount}"
+                       min="0"
+                       step="1"
+                       placeholder="Montant"
+                       required/>
+            </div>
+            <button type="submit">Payer</button>
+        </div>
+    </form>
+
+    <!-- Solde disponible -->
+    <div class="balance-box">
+        Solde disponible : <span th:text="${userBalance} + '€'">0€</span>
+    </div>
+
+    <!-- Liste déroulante des transactions -->
+    <div class="transactions">
+        <table>
+            <thead>
+            <tr>
+                <th class="table-title" colspan="3">
+                    Mes transactions
+                </th>
+            </tr>
+            <tr>
+                <th class="table-sections align-left">Relations</th>
+                <th class="table-sections align-center">Description</th>
+                <th class="table-sections align-right">Montant</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(transactions)}">
+                <td colspan="3" style="text-align: center; padding: 20px;">Aucune transaction effectuée pour le moment.</td>
+            </tr>
+            <tr th:each="tx : ${transactions}">
+                <td class="table-data align-left" th:text="${tx.name}">Nom</td>
+                <td class="table-data align-center" th:text="${tx.description}">Description</td>
+                <td class="table-data align-right" th:text="${tx.amount} + '€'">0€</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
