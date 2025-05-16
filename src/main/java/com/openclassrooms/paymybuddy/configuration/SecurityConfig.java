@@ -49,7 +49,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for testing with Postman
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/images/**").permitAll() // Allow public access to images
+                        .requestMatchers("/images/**", "/favicon.ico").permitAll() // Allow public access to images
                         .requestMatchers("/", "/home", "/register", "/login", "/error").permitAll() // Allow public access to these endpoints
                         .anyRequest().authenticated() // Require authentication for all other requests
                 )
