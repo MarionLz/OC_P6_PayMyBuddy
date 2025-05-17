@@ -7,6 +7,7 @@ import com.openclassrooms.paymybuddy.repository.UserRepository;
 import com.openclassrooms.paymybuddy.repository.AccountRepository;
 import com.openclassrooms.paymybuddy.exceptions.UserAlreadyExistsException;
 
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
