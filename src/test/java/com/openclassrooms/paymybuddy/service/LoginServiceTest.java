@@ -1,6 +1,5 @@
 package com.openclassrooms.paymybuddy.service;
 
-import com.openclassrooms.paymybuddy.exceptions.UserNotFoundException;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -8,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -60,7 +60,7 @@ public class LoginServiceTest {
         when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(java.util.Optional.empty());
 
         // Act & Assert: Verify that the exception is thrown and the repository was queried once
-        assertThrows(UserNotFoundException.class, () -> loginService.loadUserByUsername("nonexistent@example.com"));
+        assertThrows(UsernameNotFoundException.class, () -> loginService.loadUserByUsername("nonexistent@example.com"));
         verify(userRepository, times(1)).findByEmail("nonexistent@example.com");
     }
 }
