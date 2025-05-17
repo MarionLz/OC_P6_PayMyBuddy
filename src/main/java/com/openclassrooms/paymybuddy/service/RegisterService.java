@@ -39,6 +39,7 @@ public class RegisterService {
      * @param registerRequest the registration details provided by the user
      * @throws UserAlreadyExistsException if a user with the given email already exists
      */
+    @Transactional
     public void register(RegisterRequestDTO registerRequest) {
 
         // Check if a user with the given email already exists

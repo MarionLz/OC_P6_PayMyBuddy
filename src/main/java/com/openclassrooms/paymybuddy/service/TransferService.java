@@ -11,6 +11,7 @@ import com.openclassrooms.paymybuddy.repository.TransactionRepository;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import com.openclassrooms.paymybuddy.utils.RequestResult;
 import com.openclassrooms.paymybuddy.utils.UserUtils;
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,7 @@ public class TransferService {
      * @param currentUserEmail the email of the user initiating the transfer
      * @return a RequestResult indicating the success or failure of the transfer
      */
+    @Transactional
     public RequestResult transfer(TransferRequestDTO transferRequest, String currentUserEmail) {
 
         logger.info("User '{}' initiates a transfer to '{}', amount: {}",

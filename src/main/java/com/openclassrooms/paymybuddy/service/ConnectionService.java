@@ -4,6 +4,7 @@ import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import com.openclassrooms.paymybuddy.utils.RequestResult;
 import com.openclassrooms.paymybuddy.utils.UserUtils;
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class ConnectionService {
      * @param targetEmail the email of the target user to connect with
      * @return a RequestResult indicating the success or failure of the operation
      */
+    @Transactional
     public RequestResult addConnection(String currentUserEmail, String targetEmail) {
 
         logger.info("Attempting to add connection from '{}' to '{}'", currentUserEmail, targetEmail);
