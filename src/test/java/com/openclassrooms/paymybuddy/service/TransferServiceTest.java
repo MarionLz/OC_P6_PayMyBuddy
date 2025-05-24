@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -119,23 +120,36 @@ class TransferServiceTest {
         User user = new User();
         user.setEmail(email);
 
-        Transaction transaction = new Transaction();
-        transaction.setDescription("Payment");
-        transaction.setAmount(100);
-        User receiver1 = new User();
-        receiver1.setUsername("receiver1");
-        transaction.setReceiver(receiver1);
+        Transaction sentTransaction  = new Transaction();
+        sentTransaction .setDescription("Payment sent");
+        sentTransaction .setAmount(100);
+        User receiver = new User();
+        receiver.setUsername("receiver1");
+        sentTransaction .setReceiver(receiver);
+        sentTransaction.setTimestamp(LocalDateTime.now().minusDays(1));
 
-        user.setSentTransactions(Arrays.asList(transaction));
+        Transaction receivedTransaction = new Transaction();
+        receivedTransaction.setDescription("Payment received");
+        receivedTransaction.setAmount(50);
+        User sender = new User();
+        sender.setUsername("sender1");
+        receivedTransaction.setSender(sender);
+        receivedTransaction.setTimestamp(LocalDateTime.now());
+
+        user.setSentTransactions(Arrays.asList(sentTransaction ));
+        user.setReceivedTransactions(List.of(receivedTransaction));
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
 
         List<TransactionDTO> result = transferService.getTransactions(email);
 
-        assertEquals(1, result.size());
-        assertEquals("receiver1", result.get(0).getName());
-        assertEquals("Payment", result.get(0).getDescription());
-        assertEquals(100, result.get(0).getAmount());
+        assertEquals(2, result.size());
+        assertEquals("sender1", result.get(0).getName());
+        assertEquals("Payment received", result.get(0).getDescription());
+        assertEquals(50, result.get(0).getAmount());
+        assertEquals("receiver1", result.get(1).getName());
+        assertEquals("Payment sent", result.get(1).getDescription());
+        assertEquals(100, result.get(1).getAmount());
     }
 
     /**
