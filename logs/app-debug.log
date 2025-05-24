@@ -3283,3 +3283,23 @@ java.lang.Throwable: Runtime.exit(130)
 2025-05-16 22:38:21 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
 2025-05-16 22:38:21 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
 2025-05-16 22:38:32 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 11.459 seconds (process running for 13.025)
+2025-05-17 11:47:45 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Starting PaymybuddyApplication using Java 21.0.5 with PID 18760 (C:\Workspace\intellij\OC_P6_PayMyBuddy\target\classes started by Cy in C:\Workspace\intellij\OC_P6_PayMyBuddy)
+2025-05-17 11:47:45 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
+2025-05-17 11:47:45 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-17 11:48:04 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 19.724 seconds (process running for 22.655)
+2025-05-24 15:45:07 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Starting PaymybuddyApplication using Java 21.0.5 with PID 16752 (C:\Workspace\intellij\OC_P6_PayMyBuddy\target\classes started by Cy in C:\Workspace\intellij\OC_P6_PayMyBuddy)
+2025-05-24 15:45:07 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
+2025-05-24 15:45:07 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-24 15:45:18 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 12.341 seconds (process running for 13.166)
+2025-05-24 15:48:09 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Starting PaymybuddyApplication using Java 21.0.5 with PID 2620 (C:\Workspace\intellij\OC_P6_PayMyBuddy\target\classes started by Cy in C:\Workspace\intellij\OC_P6_PayMyBuddy)
+2025-05-24 15:48:09 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
+2025-05-24 15:48:09 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-24 15:48:18 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 9.835 seconds (process running for 10.684)
+2025-05-24 15:53:06 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Starting PaymybuddyApplication using Java 21.0.5 with PID 12488 (C:\Workspace\intellij\OC_P6_PayMyBuddy\target\classes started by Cy in C:\Workspace\intellij\OC_P6_PayMyBuddy)
+2025-05-24 15:53:06 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
+2025-05-24 15:53:06 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-24 15:53:14 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 8.733 seconds (process running for 9.592)
+2025-05-24 15:58:15 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Starting PaymybuddyApplication using Java 21.0.5 with PID 18140 (C:\Workspace\intellij\OC_P6_PayMyBuddy\target\classes started by Cy in C:\Workspace\intellij\OC_P6_PayMyBuddy)
+2025-05-24 15:58:15 [main] DEBUG com.openclassrooms.paymybuddy.PaymybuddyApplication - Running with Spring Boot v3.4.5, Spring v6.2.6
+2025-05-24 15:58:15 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-24 15:58:25 [main] INFO  com.openclassrooms.paymybuddy.PaymybuddyApplication - Started PaymybuddyApplication in 11.007 seconds (process running for 11.814)

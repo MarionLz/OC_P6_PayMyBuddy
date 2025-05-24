@@ -2,8 +2,10 @@ package com.openclassrooms.paymybuddy.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * Entity representing a transaction in the system.
@@ -51,4 +53,12 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "receiverId")
     private User receiver;
+
+    /**
+     * The timestamp when the transaction was created.
+     * Automatically set to the current date and time when the transaction is created.
+     */
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime timestamp;
 }

@@ -230,19 +230,26 @@
                 </th>
             </tr>
             <tr>
-                <th class="table-sections align-left">Relations</th>
+                <th class="table-sections align-left">Date</th>
+                <th class="table-sections align-center">Relation</th>
                 <th class="table-sections align-center">Description</th>
                 <th class="table-sections align-right">Montant</th>
             </tr>
             </thead>
             <tbody>
             <tr th:if="${#lists.isEmpty(transactions)}">
-                <td colspan="3" style="text-align: center; padding: 20px;">Aucune transaction effectuée pour le moment.</td>
+                <td colspan="4" style="text-align: center; padding: 20px;">Aucune transaction effectuée pour le moment.</td>
             </tr>
             <tr th:each="tx : ${transactions}">
-                <td class="table-data align-left" th:text="${tx.name}">Nom</td>
+                <td class="table-data align-left" th:text="${#temporals.format(tx.timestamp, 'dd/MM/yyyy')}">Date</td>
+                <td class="table-data align-center" th:text="${tx.name}">Nom</td>
                 <td class="table-data align-center" th:text="${tx.description}">Description</td>
-                <td class="table-data align-right" th:text="${tx.amount} + '€'">0€</td>
+                <td class="table-data align-right">
+                    <span th:if="${tx.direction == 'RECEIVED'}" style="color: green;"
+                          th:text="|+${tx.amount} €|"></span>
+                    <span th:if="${tx.direction == 'SENT'}" style="color: red;"
+                          th:text="|-${tx.amount} €|"></span>
+                </td>
             </tr>
             </tbody>
         </table>
