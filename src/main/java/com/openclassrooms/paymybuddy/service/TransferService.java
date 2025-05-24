@@ -71,7 +71,7 @@ public class TransferService {
      * Retrieves the list of transactions sent by a user identified by their email.
      *
      * @param email the email of the user whose transactions are to be fetched
-     * @return a list of TransactionDTO objects representing the user's sent transactions
+     * @return a list of TransactionDTO objects representing the user's sent and received transactions
      */
     public List<TransactionDTO> getTransactions(String email) {
 

@@ -90,7 +90,7 @@ public class TransferControllerTest {
     void testShowTransferPage_ShouldPopulateModelAndReturnView() throws Exception {
         when(principal.getName()).thenReturn("user@example.com");
         List<ConnectionDTO> mockConnections = List.of(new ConnectionDTO("friend@example.com"));
-        List<TransactionDTO> mockTransactions = List.of(new TransactionDTO("Marion", "remboursement", 100));
+        List<TransactionDTO> mockTransactions = List.of(new TransactionDTO("Marion", "remboursement", 100, null, "SENT"));
 
         when(transferService.getConnections("user@example.com")).thenReturn(mockConnections);
         when(transferService.getUserBalance("user@example.com")).thenReturn(1000);
