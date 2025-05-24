@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,11 +75,35 @@ public class TransferService {
      */
     public List<TransactionDTO> getTransactions(String email) {
 
-        logger.info("Fetching sent transactions for user '{}'", email);
+        logger.info("Fetching all transactions (sent and received) for user '{}'", email);
         User user = UserUtils.findUserByEmailOrThrow(userRepository, email);
-        return user.getSentTransactions().stream()
-                .map(transaction -> new TransactionDTO(transaction.getReceiver().getUsername(), transaction.getDescription(), transaction.getAmount()))
+
+        List<TransactionDTO> sentTransactions = user.getSentTransactions().stream()
+                .map(transaction -> new TransactionDTO(
+                        transaction.getReceiver().getUsername(),
+                        transaction.getDescription(),
+                        transaction.getAmount(),
+                        transaction.getTimestamp(),
+                        "SENT"
+                ))
                 .toList();
+
+        List<TransactionDTO> receivedTransactions = user.getReceivedTransactions().stream()
+                .map(transaction -> new TransactionDTO(
+                        transaction.getSender().getUsername(),
+                        transaction.getDescription(),
+                        transaction.getAmount(),
+                        transaction.getTimestamp(),
+                        "RECEIVED"
+                        ))
+                .toList();
+
+        List<TransactionDTO> allTransactions = new ArrayList<>();
+        allTransactions.addAll(sentTransactions);
+        allTransactions.addAll(receivedTransactions);
+        allTransactions.sort((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()));
+
+        return allTransactions;
     }
 
     /**
